@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useDispatch } from 'react-redux';
 
 import { added } from '../app/todoSlice';
+import { postTodo } from "../app/todoSlice";
 
 export default function CreateArea(props) {
     const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export default function CreateArea(props) {
 
     function handleSubmit(e) {
         dispatch(added(note));
-        setNote(blankNote)
+        dispatch(postTodo(note))
         e.preventDefault();
     }
 

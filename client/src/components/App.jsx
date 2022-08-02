@@ -1,15 +1,26 @@
-import React from "react";
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from "./Header";
 import CreateArea from "./CreateArea";
 import Note from "./Note";
 
+import { fetchPosts } from "../app/todoSlice";
+
 
 export default function App() {
 
-    const notes = useSelector(state => state.todo.value)
-    console.log(useSelector(state => state));
+    const dispatch = useDispatch()
+
+    const notes = useSelector(state => state.todo.todos)
+    const status = useSelector(state => state.todo.status)
+
+
+    useEffect(() => {
+        if (status === "idle") {
+            dispatch(fetchPosts())
+        }
+    }, [dispatch, status])
 
     function renders() {
         return (
@@ -20,7 +31,6 @@ export default function App() {
     }
 
     return (
-
         <React.StrictMode>
             <Header />
             <CreateArea />
